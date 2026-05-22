@@ -3,4 +3,6 @@ export interface Song {
   name: string;
   genre: string;
   release_date: string;
+  artist?: string;
+  cover_url?: string;
 }
