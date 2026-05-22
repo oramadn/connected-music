@@ -1,6 +1,14 @@
-import { Controller, Get, Param, HttpCode, HttpStatus } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+} from "@nestjs/common";
 // import { NullableType } from "src/utils/types/nullable.types";
-// import { Song } from "./interfaces/songs.interface";
+import { CreateSongDto } from "./dto/create-song.dto";
+import { Song } from "./interfaces/songs.interface";
 import { SongsService } from "./songs.service";
 
 @Controller("songs")
@@ -13,8 +21,9 @@ export class SongsController {
     return this.songsService.findAll();
   }
 
-  // @Post()
-  // create(@Body() createCatDto: CreateCatDto) {
-  //   return { message: "This actions creates a cat!", data: createCatDto };
-  // }
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() createSongDto: CreateSongDto): string {
+    return "This action adds a new song";
+  }
 }
