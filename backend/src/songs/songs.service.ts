@@ -17,6 +17,7 @@ export class SongsService {
         name: createSongDto.name,
         genre: createSongDto.genre,
         release_date: createSongDto.release_date,
+        artist: createSongDto.artist,
       })
       .returning();
     return result[0];

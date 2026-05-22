@@ -25,4 +25,11 @@ export class CreateSongDto {
   @IsNotEmpty()
   @IsDateString()
   release_date: string;
+
+  @ApiProperty({
+    example: "Queen",
+    description: "The name of the artist",
+  })
+  @IsNotEmpty()
+  artist: string;
 }

@@ -8,4 +8,5 @@ export const songs = pgTable("songs", {
   name: text("name").notNull(),
   genre: genreEnum("genre").notNull(),
   release_date: date("release_date").notNull(),
+  artist: text("artist").notNull(),
 });

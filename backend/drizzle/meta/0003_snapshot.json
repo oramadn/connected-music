@@ -1,0 +1,96 @@
+{
+  "id": "7d998d1d-231e-4034-8401-8accea4a7dad",
+  "prevId": "108c1544-1f2d-4d98-9236-9a147d90f60e",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.songs": {
+      "name": "songs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genre": {
+          "name": "genre",
+          "type": "genre",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "release_date": {
+          "name": "release_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "artist": {
+          "name": "artist",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.genre": {
+      "name": "genre",
+      "schema": "public",
+      "values": [
+        "pop",
+        "rock",
+        "hip_hop",
+        "r_and_b",
+        "jazz",
+        "blues",
+        "country",
+        "electronic",
+        "dance",
+        "classical",
+        "metal",
+        "punk",
+        "reggae",
+        "folk",
+        "latin",
+        "indie",
+        "funk",
+        "soul",
+        "gospel",
+        "lofi",
+        "ambient",
+        "house",
+        "techno",
+        "trap",
+        "drill",
+        "afrobeat"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
