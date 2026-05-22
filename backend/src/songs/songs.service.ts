@@ -1,8 +1,22 @@
 import { Injectable } from "@nestjs/common";
+import { db } from "../db/db";
+import { songs } from "../db/schema";
+import { Song } from "./interfaces/songs.interface";
+import { CreateSongDto } from "./dto/create-song.dto";
 
 @Injectable()
 export class SongsService {
-  findAll(): string {
-    return "Hello CM!";
+  async findAll(): Promise<Song[]> {
+    return db.select().from(songs);
+  }
+
+  async create(createSongDto: CreateSongDto): Promise<Song> {
+    const result = await db
+      .insert(songs)
+      .values({
+        name: createSongDto.name,
+      })
+      .returning();
+    return result[0];
   }
 }

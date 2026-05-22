@@ -1,7 +1,11 @@
-import { IsNotEmpty, MinLength } from "class-validator";
+import { ApiProperty } from "@nestjs/swagger";
+import { IsNotEmpty } from "class-validator";
 
 export class CreateSongDto {
-  @MinLength(6)
+  @ApiProperty({
+    example: "Bohemian Rhapsody",
+    description: "The name of the song",
+  })
   @IsNotEmpty()
   name: string;
 }

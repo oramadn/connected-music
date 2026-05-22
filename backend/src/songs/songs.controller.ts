@@ -17,13 +17,13 @@ export class SongsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll(): string {
+  findAll(): Promise<Song[]> {
     return this.songsService.findAll();
   }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createSongDto: CreateSongDto): string {
-    return "This action adds a new song";
+  create(@Body() createSongDto: CreateSongDto): Promise<Song> {
+    return this.songsService.create(createSongDto);
   }
 }
