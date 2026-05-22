@@ -15,6 +15,7 @@ export class SongsService {
       .insert(songs)
       .values({
         name: createSongDto.name,
+        genre: createSongDto.genre,
       })
       .returning();
     return result[0];

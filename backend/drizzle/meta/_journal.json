@@ -8,6 +8,13 @@
       "when": 1779463932096,
       "tag": "0000_slimy_screwball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779466486187,
+      "tag": "0001_add_genre_to_songs_table",
+      "breakpoints": true
     }
   ]
 }

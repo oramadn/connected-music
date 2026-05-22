@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsIn } from "class-validator";
+import { type SongGenre, SongGenreEnum } from "src/db/enums/song-genre.enum";
 
 export class CreateSongDto {
   @ApiProperty({
@@ -8,4 +9,12 @@ export class CreateSongDto {
   })
   @IsNotEmpty()
   name: string;
+
+  @ApiProperty({
+    enum: SongGenreEnum,
+    description: "The genre of the song",
+  })
+  @IsNotEmpty()
+  @IsIn(SongGenreEnum)
+  genre: SongGenre;
 }
