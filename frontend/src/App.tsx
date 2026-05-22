@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchSongs } from "./api/api";
 import { type Song } from "./types/songs";
-import "./App.css";
 
 function App() {
   const {
@@ -22,12 +21,18 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Songs</h1>
-      <ul>
+    <div className="min-h-screen p-8 bg-background text-foreground font-sans">
+      <h1 className="text-4xl font-bold mb-6 text-primary ">Songs</h1>
+      <ul className="space-y-4 max-w-2xl mx-auto text-left">
         {songs?.map((song) => (
-          <li key={song.id}>
-            {song.name} - {song.genre} ({song.release_date})
+          <li
+            key={song.id}
+            className="p-4 bg-card text-card-foreground border border-border rounded-lg shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div className="font-semibold text-lg">{song.name}</div>
+            <div className="text-muted-foreground text-sm">
+              {song.genre} • {song.release_date}
+            </div>
           </li>
         ))}
       </ul>
