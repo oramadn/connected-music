@@ -1,0 +1,1 @@
+ALTER TABLE "songs" ADD COLUMN "release_date" date NOT NULL;

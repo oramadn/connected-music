@@ -1,0 +1,90 @@
+{
+  "id": "108c1544-1f2d-4d98-9236-9a147d90f60e",
+  "prevId": "b5f4ec92-3c28-4ed6-8ec5-20e236a9d070",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.songs": {
+      "name": "songs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "genre": {
+          "name": "genre",
+          "type": "genre",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "release_date": {
+          "name": "release_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.genre": {
+      "name": "genre",
+      "schema": "public",
+      "values": [
+        "pop",
+        "rock",
+        "hip_hop",
+        "r_and_b",
+        "jazz",
+        "blues",
+        "country",
+        "electronic",
+        "dance",
+        "classical",
+        "metal",
+        "punk",
+        "reggae",
+        "folk",
+        "latin",
+        "indie",
+        "funk",
+        "soul",
+        "gospel",
+        "lofi",
+        "ambient",
+        "house",
+        "techno",
+        "trap",
+        "drill",
+        "afrobeat"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
