@@ -1,29 +1,42 @@
 services:
   postgres:
     image: postgres:17
-
     container_name: connected-music-postgres
-
     restart: always
-
     environment:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: connected-music-db
-
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: connected-music-db
     ports:
       - '5432:5432'
-
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  backend:
+    build: ./backend
+    container_name: connected-music-backend
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/connected-music-db
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    container_name: connected-music-frontend
+    restart: always
+    ports:
+      - '5173:5173'
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - backend
+
 volumes:
   postgres_data:
-
-  # backend:
-  #   build: ./backend
-  #   ports:
-  #     - "3000:3000"
-  #   volumes:
-  #     - ./backend:/usr/src/app
-  #     - /usr/src/app/node_modules
