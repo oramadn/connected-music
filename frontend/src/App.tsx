@@ -4,7 +4,7 @@ import { type Song } from "./types/songs";
 import { Navbar } from "./components/Navbar";
 import { SongCard } from "./components/SongCard";
 import { SongsEmptyState } from "./components/SongsEmptyState";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { AddSongDialog } from "./components/AddSongDialog";
 
 function App() {
   const {
@@ -37,10 +37,8 @@ function App() {
                   : "No results"}
             </span>
           </div>
-          <div className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary bg-primary text-primary-foreground cursor-pointer hover:bg-primary/90 shadow h-9 px-3 gap-2">
-            <PlusIcon className="size-5"></PlusIcon>
-            Add Song
-          </div>
+
+          <AddSongDialog />
         </div>
 
         {isPending && (
