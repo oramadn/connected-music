@@ -6,3 +6,5 @@ export interface Song {
   artist?: string;
   cover_url?: string;
 }
+
+export type CreateSong = Omit<Song, "id" | "cover_url">;
