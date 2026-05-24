@@ -8,6 +8,7 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
+  UseGuards,
 } from "@nestjs/common";
 import { CreateSongDto } from "./dto/create-song.dto";
 import { Song } from "./interfaces/songs.interface";
@@ -15,6 +16,7 @@ import { SongsService } from "./songs.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname } from "path";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Controller("songs")
 export class SongsController {
@@ -30,6 +32,7 @@ export class SongsController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(
     FileInterceptor("cover_file", {

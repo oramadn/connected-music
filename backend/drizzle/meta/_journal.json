@@ -36,6 +36,13 @@
       "when": 1779611725264,
       "tag": "0004_add_cover_url_to_songs_table",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1779634645309,
+      "tag": "0005_add_users_table",
+      "breakpoints": true
     }
   ]
 }

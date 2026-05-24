@@ -1,7 +1,35 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
+function getAuthHeader() {
+  const token = localStorage.getItem("access_token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
+export async function login(data: any) {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || "Login failed");
+  }
+
+  const result = await response.json();
+  localStorage.setItem("access_token", result.access_token);
+  return result;
+}
+
+export async function logout() {
+  localStorage.removeItem("access_token");
+}
+
 export async function fetchSongs(page: number = 1, limit: number = 10) {
-  const response = await fetch(`${API_URL}/songs?page=${page}&limit=${limit}`);
+  const response = await fetch(`${API_URL}/songs?page=${page}&limit=${limit}`, {
+    headers: { ...getAuthHeader() },
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch songs");
@@ -13,6 +41,7 @@ export async function fetchSongs(page: number = 1, limit: number = 10) {
 export async function createSong(formData: FormData) {
   const response = await fetch(`${API_URL}/songs`, {
     method: "POST",
+    headers: { ...getAuthHeader() },
     body: formData,
   });
 
