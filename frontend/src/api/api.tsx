@@ -26,8 +26,16 @@ export async function logout() {
   localStorage.removeItem("access_token");
 }
 
-export async function fetchSongs(page: number = 1, limit: number = 10) {
-  const response = await fetch(`${API_URL}/songs?page=${page}&limit=${limit}`, {
+export async function fetchSongs(
+  page: number = 1,
+  limit: number = 10,
+  search?: string,
+) {
+  let url = `${API_URL}/songs?page=${page}&limit=${limit}`;
+  if (search) {
+    url += `&search=${encodeURIComponent(search)}`;
+  }
+  const response = await fetch(url, {
     headers: { ...getAuthHeader() },
   });
 

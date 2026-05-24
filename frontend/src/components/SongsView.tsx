@@ -1,11 +1,15 @@
 import { useRef, useCallback } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, keepPreviousData } from "@tanstack/react-query";
 import { fetchSongs } from "@/api/api";
 import { SongCard } from "./SongCard";
 import { SongsEmptyState } from "./SongsEmptyState";
 import { MusicalNoteIcon } from "@heroicons/react/24/outline";
 
-export function SongsView() {
+interface SongsViewProps {
+  searchQuery?: string;
+}
+
+export function SongsView({ searchQuery }: SongsViewProps) {
   const {
     data,
     isPending,
@@ -14,9 +18,10 @@ export function SongsView() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
+    isFetching,
   } = useInfiniteQuery({
-    queryKey: ["songs"],
-    queryFn: ({ pageParam }) => fetchSongs(pageParam, 10),
+    queryKey: ["songs", searchQuery],
+    queryFn: ({ pageParam }) => fetchSongs(pageParam, 10, searchQuery),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (lastPage.meta.page < lastPage.meta.totalPages) {
@@ -24,6 +29,7 @@ export function SongsView() {
       }
       return undefined;
     },
+    placeholderData: keepPreviousData,
   });
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -45,7 +51,7 @@ export function SongsView() {
     [isFetchingNextPage, fetchNextPage, hasNextPage],
   );
 
-  if (isPending) {
+  if (isPending && !data) {
     return (
       <div className="flex justify-center py-20">
         <MusicalNoteIcon className="animate-spin text-primary size-10" />
@@ -61,15 +67,19 @@ export function SongsView() {
     );
   }
 
-  const isEmpty = data.pages[0]?.data.length === 0;
+  const isEmpty = data?.pages[0]?.data.length === 0;
 
   if (isEmpty) {
     return <SongsEmptyState />;
   }
 
   return (
-    <div className="flex flex-col">
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
+    <div className="flex flex-col relative">
+      <div
+        className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6 transition-opacity duration-300 ${
+          isFetching && !isFetchingNextPage ? "opacity-40 pointer-events-none" : "opacity-100"
+        }`}
+      >
         {data.pages.map((page, pageIndex) => {
           return page.data.map((song: any, songIndex: number) => {
             const isLastSong =
@@ -78,14 +88,14 @@ export function SongsView() {
 
             if (isLastSong) {
               return (
-                <div ref={lastSongElementRef} key={song.id}>
+                <div ref={lastSongElementRef} key={song.id} className="animate-in fade-in duration-500">
                   <SongCard song={song} />
                 </div>
               );
             }
 
             return (
-              <div key={song.id}>
+              <div key={song.id} className="animate-in fade-in duration-500">
                 <SongCard song={song} />
               </div>
             );
@@ -93,13 +103,19 @@ export function SongsView() {
         })}
       </div>
 
+      {isFetching && !isFetchingNextPage && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+           <MusicalNoteIcon className="animate-spin text-primary size-12 opacity-80" />
+        </div>
+      )}
+
       {isFetchingNextPage && (
         <div className="flex justify-center py-8">
           <MusicalNoteIcon className="animate-spin text-primary size-8" />
         </div>
       )}
 
-      {!hasNextPage && (
+      {!hasNextPage && !isEmpty && (
         <div className="text-center text-muted-foreground py-8">
           You've reached the end of the library!
         </div>

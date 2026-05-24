@@ -39,8 +39,9 @@ export class SongsController {
   findAll(
     @Query("page") page: string = "1",
     @Query("limit") limit: string = "10",
+    @Query("search") search?: string,
   ) {
-    return this.songsService.findAll(Number(page), Number(limit));
+    return this.songsService.findAll(Number(page), Number(limit), search);
   }
 
   @Get("genres")

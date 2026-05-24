@@ -3,17 +3,29 @@ import { db } from "../db/db";
 import { songs } from "../db/schema";
 import { Song } from "./interfaces/songs.interface";
 import { CreateSongDto } from "./dto/create-song.dto";
-import { count } from "drizzle-orm";
+import { count, ilike, or } from "drizzle-orm";
 import { SongGenreEnum } from "../db/enums/song-genre.enum";
 
 @Injectable()
 export class SongsService {
-  async findAll(page: number, limit: number) {
+  async findAll(page: number, limit: number, search?: string) {
     const offset = (page - 1) * limit;
 
-    const data = await db.select().from(songs).limit(limit).offset(offset);
+    const whereClause = search
+      ? or(ilike(songs.name, `%${search}%`), ilike(songs.artist, `%${search}%`))
+      : undefined;
 
-    const totalRecords = await db.select({ value: count() }).from(songs);
+    const data = await db
+      .select()
+      .from(songs)
+      .where(whereClause)
+      .limit(limit)
+      .offset(offset);
+
+    const totalRecords = await db
+      .select({ value: count() })
+      .from(songs)
+      .where(whereClause);
     const total = totalRecords[0].value;
 
     return {
