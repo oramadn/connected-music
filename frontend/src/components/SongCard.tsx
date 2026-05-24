@@ -39,7 +39,7 @@ export function SongCard({ song }: SongCardProps) {
         <p className="text-sm text-muted-foreground mb-3 truncate">{artist}</p>
         <div className="flex items-center justify-between mt-auto">
           <div className="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-semibold bg-primary/10 text-primary">
-            {song.genre}
+            {song.genre.replace(/_/g, " ")}
           </div>
           <span className="text-xs text-muted-foreground font-medium">
             {year}

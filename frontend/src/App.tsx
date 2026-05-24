@@ -43,7 +43,7 @@ function App() {
               <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
               <Input
                 placeholder="Search songs or artists..."
-                className="pl-9"
+                className="pl-9 text-sm lg:text-base"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
