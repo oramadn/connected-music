@@ -1,4 +1,4 @@
-import { MusicalNoteIcon } from "@heroicons/react/24/outline";
+import { MusicalNoteIcon, ArrowRightStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { LoginDialog } from "./LoginDialog";
 import { Button } from "./ui/button";
 import { logout } from "@/api/api";
@@ -16,8 +16,8 @@ export function Navbar({ isLoggedIn, onLoginSuccess, onLogout }: NavbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur">
-      <div className="w-full px-4 md:px-8 xl:px-16 h-14 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/85 backdrop-blur">
+      <div className="w-full px-4 md:px-8 xl:px-16 h-16 flex items-center justify-between gap-4">
         <a
           href="/"
           className="tracking-tight flex items-center gap-2 text-primary whitespace-nowrap"
@@ -32,10 +32,11 @@ export function Navbar({ isLoggedIn, onLoginSuccess, onLogout }: NavbarProps) {
         <nav className="flex items-center gap-4">
           {isLoggedIn ? (
             <Button
-              variant="outline"
-              className="rounded-md"
+              variant="ghost"
+              className="rounded-md text-muted-foreground hover:text-foreground"
               onClick={handleLogout}
             >
+              <ArrowRightStartOnRectangleIcon className="size-4" />
               Logout
             </Button>
           ) : (

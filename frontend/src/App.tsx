@@ -25,7 +25,7 @@ function App() {
       <main className="w-full px-4 md:px-8 xl:px-16 py-4">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight">
+            <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
               {" "}
               Latest Additions{" "}
             </h1>
