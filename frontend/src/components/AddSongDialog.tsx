@@ -14,7 +14,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { createSong } from "@/api/api";
-import { type CreateSong } from "@/types/songs";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -29,10 +28,9 @@ export function AddSongDialog() {
       setOpen(false);
     },
   });
+
   const handleAction = (formData: FormData) => {
-    console.log("yooo");
-    const newSong = Object.fromEntries(formData.entries());
-    mutation.mutate(newSong as CreateSong);
+    mutation.mutate(formData);
   };
 
   const handleOpenChange = (open: boolean) => {
@@ -85,6 +83,15 @@ export function AddSongDialog() {
                 name="release_date"
                 type="date"
                 required
+              />
+            </Field>
+            <Field>
+              <Label htmlFor="cover_file-1">Cover Image</Label>
+              <Input
+                id="cover_file-1"
+                name="cover_file"
+                type="file"
+                accept="image/*"
               />
             </Field>
           </FieldGroup>

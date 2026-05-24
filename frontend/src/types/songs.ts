@@ -4,7 +4,5 @@ export interface Song {
   genre: string;
   release_date: string;
   artist?: string;
-  cover_url?: string;
+  cover_url?: string | null;
 }
-
-export type CreateSong = Omit<Song, "id" | "cover_url">;

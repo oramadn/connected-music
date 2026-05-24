@@ -1,3 +1,4 @@
+import { MusicalNoteIcon } from "@heroicons/react/24/outline";
 import { type Song } from "../types/songs";
 import { Card, CardContent } from "./ui/card";
 
@@ -7,28 +8,33 @@ interface SongCardProps {
 
 export function SongCard({ song }: SongCardProps) {
   const year = new Date(song.release_date).getFullYear();
-  const coverUrl =
-    song.cover_url ||
-    "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=500&h=500";
   const artist = song.artist || "Unknown Artist";
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const coverUrl = song.cover_url
+    ? song.cover_url.startsWith("http")
+      ? song.cover_url
+      : `${API_URL}${song.cover_url}`
+    : null;
 
   return (
     <Card className="rounded-xl border border-border bg-card text-card-foreground shadow-sm overflow-hidden group hover:border-primary/50 transition-colors focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 focus-within:ring-offset-background p-0 py-0 gap-0">
-      <div className="aspect-square w-full overflow-hidden bg-muted">
-        <img
-          src={coverUrl}
-          alt={song.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
+      <div className="aspect-square w-full overflow-hidden bg-muted flex items-center justify-center">
+        {coverUrl ? (
+          <img
+            src={coverUrl}
+            alt={song.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <MusicalNoteIcon className="size-12 text-muted-foreground/50 group-hover:scale-110 transition-transform duration-300" />
+        )}
       </div>
-      <CardContent className="p-4 flex flex-col h-[104px]">
+      <CardContent className="p-4 flex flex-col h-26">
         <h3 className="font-semibold leading-none tracking-tight mb-1 truncate">
-          <a
-            href="#"
-            className="outline-none hover:text-primary transition-colors"
-          >
+          <span className="outline-none hover:text-primary transition-colors">
             {song.name}
-          </a>
+          </span>
         </h3>
         <p className="text-sm text-muted-foreground mb-3 truncate">{artist}</p>
         <div className="flex items-center justify-between mt-auto">

@@ -1,5 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsIn, IsDateString } from "class-validator";
+import {
+  IsNotEmpty,
+  IsIn,
+  IsDateString,
+  IsOptional,
+  IsUrl,
+} from "class-validator";
 import { type SongGenre, SongGenreEnum } from "src/db/enums/song-genre.enum";
 
 export class CreateSongDto {
@@ -32,4 +38,13 @@ export class CreateSongDto {
   })
   @IsNotEmpty()
   artist: string;
+
+  @ApiProperty({
+    example:
+      "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=500&h=500&auto=format&fit=crop",
+    description: "Cover image of the song",
+  })
+  @IsOptional()
+  @IsUrl()
+  cover_url?: string | null;
 }
