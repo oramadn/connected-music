@@ -1,7 +1,7 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export async function fetchSongs() {
-  const response = await fetch(`${API_URL}/songs`);
+export async function fetchSongs(page: number = 1, limit: number = 10) {
+  const response = await fetch(`${API_URL}/songs?page=${page}&limit=${limit}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch songs");

@@ -5,6 +5,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
@@ -21,8 +22,11 @@ export class SongsController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll(): Promise<Song[]> {
-    return this.songsService.findAll();
+  findAll(
+    @Query("page") page: string = "1",
+    @Query("limit") limit: string = "10",
+  ) {
+    return this.songsService.findAll(Number(page), Number(limit));
   }
 
   @Post()

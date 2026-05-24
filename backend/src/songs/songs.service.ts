@@ -3,11 +3,27 @@ import { db } from "../db/db";
 import { songs } from "../db/schema";
 import { Song } from "./interfaces/songs.interface";
 import { CreateSongDto } from "./dto/create-song.dto";
+import { count } from "drizzle-orm";
 
 @Injectable()
 export class SongsService {
-  async findAll(): Promise<Song[]> {
-    return db.select().from(songs);
+  async findAll(page: number, limit: number) {
+    const offset = (page - 1) * limit;
+
+    const data = await db.select().from(songs).limit(limit).offset(offset);
+
+    const totalRecords = await db.select({ value: count() }).from(songs);
+    const total = totalRecords[0].value;
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async create(createSongDto: CreateSongDto): Promise<Song> {
