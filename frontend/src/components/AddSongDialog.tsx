@@ -13,13 +13,26 @@ import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { createSong } from "@/api/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { createSong, fetchGenres } from "@/api/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 export function AddSongDialog() {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
+
+  const { data: genres = [], isLoading: isLoadingGenres } = useQuery({
+    queryKey: ["genres"],
+    queryFn: fetchGenres,
+    enabled: open,
+  });
 
   const mutation = useMutation({
     mutationFn: createSong,
@@ -74,7 +87,22 @@ export function AddSongDialog() {
             </Field>
             <Field>
               <Label htmlFor="genre-1">Genre</Label>
-              <Input id="genre-1" name="genre" placeholder="pop" required />
+              <Select name="genre" required>
+                <SelectTrigger id="genre-1">
+                  <SelectValue
+                    placeholder={
+                      isLoadingGenres ? "Loading genres..." : "Select a genre"
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  {genres.map((genre: string) => (
+                    <SelectItem key={genre} value={genre}>
+                      {genre.replace(/_/g, " ")}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </Field>
             <Field>
               <Label htmlFor="release_date-1">Release Date</Label>

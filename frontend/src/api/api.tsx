@@ -38,6 +38,18 @@ export async function fetchSongs(page: number = 1, limit: number = 10) {
   return response.json();
 }
 
+export async function fetchGenres() {
+  const response = await fetch(`${API_URL}/songs/genres`, {
+    headers: { ...getAuthHeader() },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch genres");
+  }
+
+  return response.json();
+}
+
 export async function createSong(formData: FormData) {
   const response = await fetch(`${API_URL}/songs`, {
     method: "POST",

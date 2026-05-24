@@ -17,12 +17,24 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
 import { extname } from "path";
 import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
+import {
+  ApiTags,
+  ApiOperation,
+  ApiOkResponse,
+  ApiCreatedResponse,
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiBody,
+} from "@nestjs/swagger";
 
+@ApiTags("songs")
 @Controller("songs")
 export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
   @Get()
+  @ApiOperation({ summary: "Get all songs" })
+  @ApiOkResponse({ description: "Return all songs." })
   @HttpCode(HttpStatus.OK)
   findAll(
     @Query("page") page: string = "1",
@@ -31,8 +43,38 @@ export class SongsController {
     return this.songsService.findAll(Number(page), Number(limit));
   }
 
+  @Get("genres")
+  @ApiOperation({ summary: "Get all song genres" })
+  @ApiOkResponse({ description: "Return all song genres." })
+  @HttpCode(HttpStatus.OK)
+  getGenres() {
+    return this.songsService.getGenres();
+  }
+
   @Post()
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "Create a new song" })
+  @ApiCreatedResponse({
+    description: "The song has been successfully created.",
+  })
+  @ApiConsumes("multipart/form-data")
+  @ApiBody({
+    schema: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        artist: { type: "string" },
+        genre: { type: "string" },
+        release_date: { type: "string", format: "date" },
+        cover_file: {
+          type: "string",
+          format: "binary",
+        },
+      },
+      required: ["name", "artist", "genre", "release_date"],
+    },
+  })
   @HttpCode(HttpStatus.CREATED)
   @UseInterceptors(
     FileInterceptor("cover_file", {

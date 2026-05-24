@@ -4,6 +4,7 @@ import { songs } from "../db/schema";
 import { Song } from "./interfaces/songs.interface";
 import { CreateSongDto } from "./dto/create-song.dto";
 import { count } from "drizzle-orm";
+import { SongGenreEnum } from "../db/enums/song-genre.enum";
 
 @Injectable()
 export class SongsService {
@@ -24,6 +25,10 @@ export class SongsService {
         totalPages: Math.ceil(total / limit),
       },
     };
+  }
+
+  getGenres() {
+    return SongGenreEnum;
   }
 
   async create(createSongDto: CreateSongDto): Promise<Song> {
