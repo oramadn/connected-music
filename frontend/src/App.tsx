@@ -28,7 +28,7 @@ function App() {
       />
 
       <main className="w-full px-4 md:px-8 xl:px-16 py-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl lg:text-4xl font-bold tracking-tight">
               Latest Additions
