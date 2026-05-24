@@ -20,10 +20,10 @@ export function Navbar({ isLoggedIn, onLoginSuccess, onLogout }: NavbarProps) {
       <div className="w-full px-4 md:px-8 xl:px-16 h-14 flex items-center justify-between gap-4">
         <a
           href="/"
-          className="font-bold text-lg tracking-tight flex items-center gap-2 text-primary whitespace-nowrap"
+          className="tracking-tight flex items-center gap-2 text-primary whitespace-nowrap"
         >
-          <MusicalNoteIcon className="size-8" />
-          <div className="flex flex-col leading-none">
+          <MusicalNoteIcon className="size-10" strokeWidth={2} />
+          <div className="flex flex-col leading-none text-xl italic font-bold text-black">
             <span>Connected</span>
             <span>Music</span>
           </div>
