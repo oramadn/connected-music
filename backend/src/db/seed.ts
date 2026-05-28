@@ -1,6 +1,7 @@
 import { db } from "./db";
-import { songs } from "./schema";
+import { songs, users } from "./schema";
 import { SongGenreEnum } from "./enums/song-genre.enum";
+import * as bcrypt from "bcrypt";
 
 async function seed() {
   const sampleSongs = Array.from({ length: 25 }).map((_, i) => ({
@@ -18,8 +19,13 @@ async function seed() {
   }));
 
   try {
+    const hashedPassword = await bcrypt.hash("password", 10);
+    await db.insert(users).values({
+      email: "admin@example.com",
+      password: hashedPassword,
+    });
+
     await db.insert(songs).values(sampleSongs);
-    console.log("Successfully seeded 25 songs!");
   } catch (error) {
     console.error("Error seeding database:", error);
   } finally {
