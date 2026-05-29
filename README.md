@@ -2,9 +2,18 @@
 
 ## Getting Started
 
-Follow these steps to get the project up and running using Docker.
+Follow these steps to get the project up and running.
 
-### 1. Start the containers
+### 1. Setup environment variables
+
+Copy the example environment files to create your local `.env` files:
+
+```bash
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+```
+
+### 2. Start the containers
 
 Run the following command to start the database, backend, and frontend services:
 
@@ -12,13 +21,13 @@ Run the following command to start the database, backend, and frontend services:
 docker compose up -d
 ```
 
-### 2. Run database migrations
+### 3. Run database migrations
 
 ```bash
 docker exec connected-music-backend npm run db:migrate
 ```
 
-### 3. Seed the database
+### 4. Seed the database
 
 Populate the database with initial data, including the admin user:
 
